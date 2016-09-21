@@ -1,0 +1,71 @@
+
+<ion-header>
+
+  <ion-navbar>
+  <!-->  <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+
+<ion-buttons left>
+      <button (click)="goToStatistic()" >
+        <ion-icon name="star"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>
+      WripIt Main
+    </ion-title>
+
+    <ion-buttons end>
+      <button (click)="goToSettings()" >
+        <ion-icon name="options"></ion-icon>
+      </button>
+    </ion-buttons>
+
+
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+   <!-- Grid to put buttons into order --> 
+  <ion-grid>
+    <ion-row>
+      <ion-col width-50>
+         <button round (click)="doAlert()">1223</button>
+      </ion-col>
+      <ion-col width-50>
+        <button round>2</button>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col width-50>
+         <button round>3</button>
+      </ion-col>
+      <ion-col width-50>
+        <button round>4</button>
+        </ion-col>
+    </ion-row>
+
+        <ion-row>
+      <ion-col width-50>
+         <button round>5</button>
+      </ion-col>
+      <ion-col width-50>
+        <button round>6</button>
+        </ion-col>
+    </ion-row>
+
+  </ion-grid>
+  <p>
+    <button full>
+      
+      <ion-icon name="mic"></ion-icon>
+      Record
+      </button>
+    </p>
+</ion-content>
+
