@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import { StatisticPage } from '../statistic/statistic';
+//import { MediaCapture } from 'ionic-native';
 
 
 @Component({
