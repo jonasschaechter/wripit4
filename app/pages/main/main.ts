@@ -3,60 +3,25 @@ import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import { StatisticPage } from '../statistic/statistic';
-import { AudioRecorder } from '../../services/audiorecorder';
+import { MediaPlugin } from 'ionic-native';
 
 
 @Component({
   templateUrl: 'build/pages/main/main.html',
-  providers: [AudioRecorder]
 })
 export class MainPage {
-  constructor(
-    private navCtrl: NavController, 
-    public alertCrtl: AlertController,
-    public audioRecorder: AudioRecorder) {
+ media: MediaPlugin;
+
+  
+
+  constructor(private navCtrl: NavController, public alertCrtl: AlertController) {
     this.navCtrl = navCtrl;
-     
   }
- 
 
-startRecording() {
-  try {
-    this.audioRecorder.startRecording();
-  }
-  catch (e) {
-    this.showAlert('Could not start recording.');
-  }
-}
-
-stopRecording() {
-  try {
-    this.audioRecorder.stopRecording();
-  }
-  catch (e) {
-    this.showAlert('Could not stop recording.');
-  }
-}
-
-startPlayback() {
-  try {
-    this.audioRecorder.startPlayback();
-  }
-  catch (e) {
-    this.showAlert('Could not play recording.');
-  }
-}
-
-stopPlayback() {
-  try {
-    this.audioRecorder.stopPlayback();
-  }
-  catch (e) {
-    this.showAlert('Could not stop playing recording.');
-  }
-}  
-
-
+ionViewDidEnter() {
+    this.media = new MediaPlugin('../Library/NoCloud/recording.wav')
+  } 
+  
 //show error message
 showAlert(message) {
   let alert = this.alertCrtl.create({
@@ -67,7 +32,44 @@ showAlert(message) {
   alert.present();
 }
 
-//show popup
+//recording bottons
+startRecording() {
+  try {
+    this.media.startRecord();
+  }
+  catch (e) {
+    this.showAlert('Could not start recording.');
+  }
+}
+
+stopRecording() {
+  try {
+    this.media.stopRecord();
+  }
+  catch (e) {
+    this.showAlert('Could not stop recording.');
+  }
+}
+
+startPlayback() {
+  try {
+    this.media.play();
+  }
+  catch (e) {
+    this.showAlert('Could not play recording.');
+  }
+}
+
+stopPlayback() {
+  try {
+    this.media.stop();
+  }
+  catch (e) {
+    this.showAlert('Could not stop playing recording.');
+  }
+}
+
+ //make Popup 
 doAlert() {
  let alert = this.alertCrtl.create({
         title: 'Statistics',
@@ -79,14 +81,11 @@ doAlert() {
   }
 //link to Settings
   goToSettings(){
-this.navCtrl.push(SettingsPage, {
-direction: 'back',
-animation: false 
-});
+this.navCtrl.push(SettingsPage);
 
   }
 
-//link to Settings
+//link to Statistics
   goToStatistic(){
 this.navCtrl.push(StatisticPage);
 
