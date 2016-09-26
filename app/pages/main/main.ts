@@ -3,31 +3,26 @@ import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import { StatisticPage } from '../statistic/statistic';
-import { MediaPlugin } from 'ionic-native';
+import { AudioRecorder } from '../../services/audiorecorder';
 
 
 @Component({
   templateUrl: 'build/pages/main/main.html',
+  providers: [AudioRecorder]
 })
 export class MainPage {
-media: MediaPlugin;
-
-  ionViewDidEnter() {
-    this.media = new MediaPlugin('../Library/NoCloud/recording.wav')
-  }
-
-
-
-  constructor(private navCtrl: NavController, public alertCrtl: AlertController) {
+  constructor(
+    private navCtrl: NavController, 
+    public alertCrtl: AlertController,
+    public audioRecorder: AudioRecorder) {
     this.navCtrl = navCtrl;
      
   }
  
 
-  //Recording functions including Error Messages
-  startRecording() {
+startRecording() {
   try {
-    this.media.startRecord();
+    this.audioRecorder.startRecording();
   }
   catch (e) {
     this.showAlert('Could not start recording.');
@@ -36,7 +31,7 @@ media: MediaPlugin;
 
 stopRecording() {
   try {
-    this.media.stopRecord();
+    this.audioRecorder.stopRecording();
   }
   catch (e) {
     this.showAlert('Could not stop recording.');
@@ -45,7 +40,7 @@ stopRecording() {
 
 startPlayback() {
   try {
-    this.media.play();
+    this.audioRecorder.startPlayback();
   }
   catch (e) {
     this.showAlert('Could not play recording.');
@@ -54,12 +49,12 @@ startPlayback() {
 
 stopPlayback() {
   try {
-    this.media.stop();
+    this.audioRecorder.stopPlayback();
   }
   catch (e) {
     this.showAlert('Could not stop playing recording.');
   }
-}
+}  
 
 
 //show error message
