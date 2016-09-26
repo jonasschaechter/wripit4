@@ -4,6 +4,7 @@ import { AlertController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import { StatisticPage } from '../statistic/statistic';
 import { MediaPlugin } from 'ionic-native';
+import { Platform } from 'ionic-angular';
 
 
 @Component({
@@ -11,15 +12,30 @@ import { MediaPlugin } from 'ionic-native';
 })
 export class MainPage {
  media: MediaPlugin;
-
+ private _path: string;
+ private _ending:string;
   
 
-  constructor(private navCtrl: NavController, public alertCrtl: AlertController) {
+  constructor(private navCtrl: NavController, 
+        public alertCrtl: AlertController,
+        public platform: Platform) {
     this.navCtrl = navCtrl;
+    this.platform = platform;
   }
 
+ private getPathFileRecordAudio(): string {
+     let path: string = (this.platform.is('ios') ? '../Library/NoCloud/': '../Documents/');
+     this.showAlert(path);
+     let _ending: string = (this.platform.is('ios') ? '.wav':'.amr');
+
+     
+     return path + 'wripit4' + _ending;
+       }
+
+// set path
 ionViewDidEnter() {
-    this.media = new MediaPlugin('../Library/NoCloud/recording.wav')
+    
+    this.media = new MediaPlugin(this.getPathFileRecordAudio())
   } 
   
 //show error message
@@ -45,6 +61,8 @@ startRecording() {
 stopRecording() {
   try {
     this.media.stopRecord();
+    this.media.release();
+    this.showAlert('Laenge' + this.media.getDuration());
   }
   catch (e) {
     this.showAlert('Could not stop recording.');
